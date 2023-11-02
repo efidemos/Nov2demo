@@ -1,0 +1,24 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: Nov2demo-app
+  namespace: argocd
+spec:
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: Nov2demo
+  project: Nov2demo-project
+  source:
+    directory:
+      jsonnet: {}
+      recurse: true
+    path: deploy/resources
+    repoURL: https://github.com/tanuudemo/Nov2demo.git
+    targetRevision: HEAD
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true
+    - Replace=true
